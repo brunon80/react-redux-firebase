@@ -37,8 +37,8 @@ class Comments extends React.Component{
         {
           this.state.index === i && this.state.isFieldOpened &&
             <form onSubmit={this.handleEditSubmit(i, comment.id)} ref={ (editForm) => {this.editForm = editForm} } className="comment-form">
-              <input type="text" ref="editedAuthor" placeholder="author"/>
-              <input type="text" ref="editedComment" placeholder="comment"/>
+              <input type="text" ref="editedAuthor" placeholder="author" defaultValue={comment.user}/>
+              <input type="text" ref="editedComment" placeholder="comment" defaultValue={comment.text}/>
               <button type="submit" className="btn-green">Done!</button>
             </form>
         }
