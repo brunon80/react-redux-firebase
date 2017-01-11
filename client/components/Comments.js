@@ -28,12 +28,12 @@ class Comments extends React.Component{
           {comment.text}
           <span className="flex flex-center">
             <button className="remove-comment" onClick={() => this.showEditFields(i)}>edit</button>
-            <button className="remove-comment" onClick={this.props.removeComment.bind(null, i)}>&times;</button>
+            <button className="remove-comment" onClick={() => this.props.removeComment(this.props.params.username, i, comment.id)}>&times;</button>
           </span>
         </p>
         {
           this.state.index === i && this.state.isFieldOpened &&
-            <form onSubmit={this.handleEditSubmit(i)} ref={(editForm) => {this.editForm = editForm}} className="comment-form">
+            <form onSubmit={this.handleEditSubmit(i, comment.id)} ref={ (editForm) => {this.editForm = editForm} } className="comment-form">
               <input type="text" ref="editedAuthor" placeholder="author"/>
               <input type="text" ref="editedComment" placeholder="comment"/>
               <button type="submit" className="btn-green">Done!</button>
@@ -43,32 +43,38 @@ class Comments extends React.Component{
     );
   }
 
-  handleEditSubmit(index) {
+  handleEditSubmit(index, id) {
     const that = this
     return (event) => {
       event.preventDefault()
       console.log(index)
       that.showEditFields(index)
-      that.props.editComment(that.refs.editedAuthor.value, that.refs.editedComment.value, index);
+      if (that.refs.editedAuthor.value && that.refs.editedAuthor.value) {
+        that.props.editComment(that.refs.editedAuthor.value, that.refs.editedAuthor.value, index, that.props.params.username, id);
+      }
 
     }
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.addComment(this.refs.author.value, this.refs.comment.value);
+    if (this.refs.author.value && this.refs.comment.value) {
+      this.props.addComment(this.refs.author.value, this.refs.comment.value, this.props.params.username);
+    }
     this.commentForm.reset();
   }
   render() {
 
-    const comments = this.props.comments || [];
+    const { commentsList, isFetching } = this.props.comments;
     return (
       <div className="comments">
         <h1 className="right-col__title">Comments</h1>
 
         {
-          comments.length > 0 ?
-            comments.map(this.renderComment) 
+          isFetching ?          
+            <h3>Loading comments...</h3>
+            :
+            commentsList.length > 0 ?  commentsList.map(this.renderComment) 
             :
             <h3>There is no comments for this user now, be the first! :D</h3>
         }

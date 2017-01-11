@@ -65,8 +65,45 @@ function fetchGitReposAsync(repos) {
   Comments
 */
 
+export function getComment(username) {
+  return (dispatch) => {
+    firebase.database().ref(`${username}/comments`).once('value').then(function(snapshot) {
+      console.log(snapshot.val())
+      const parsedPayload = []
+      if (snapshot.val()) {
+        console.log(Object.getOwnPropertyNames(snapshot.val()))
+        const commentsIds = Object.getOwnPropertyNames(snapshot.val())
 
-export function addComment(author, comment) {
+        for (let i = 0; i < commentsIds.length; i++) {
+          const parsedAuthor = Object.getOwnPropertyNames(snapshot.val()[commentsIds[i]])[0]
+          parsedPayload.push({
+            id: commentsIds[i],
+            user: parsedAuthor,
+            text: snapshot.val()[commentsIds[i]][parsedAuthor]
+          })
+        }
+        console.log(parsedPayload)
+        return dispatch(getCommentAsync(parsedPayload))
+      } else return dispatch(getCommentAsync(parsedPayload))
+    });
+  }
+}
+
+function getCommentAsync(payload) {
+  return {
+    type: 'GET_COMMENT',
+    comments: payload,
+    isFetching: false
+  };
+}
+
+
+export function addComment(author, comment, username) {
+  firebase.database().ref(`${username}/comments`).push(
+    {
+      [author]: comment,
+    }
+  );
   return {
     type: 'ADD_COMMENT',
     author, // same as author: author
@@ -74,16 +111,23 @@ export function addComment(author, comment) {
   };
 }
 
-export function editComment(author, comment, i) {
+
+export function editComment(author, comment, i, username, id) {
+  const postData = {[author]: comment}
+  let updates = {}
+  updates[`${username}/comments/${id}`] = postData;
+  firebase.database().ref().update(updates);
   return {
     type: 'EDIT_COMMENT',
     author, // same as author: author
     comment, // same as comment: comment
     i,
+    id,
   };
 }
 
-export function removeComment(i){
+export function removeComment(username, i, id){
+  firebase.database().ref(`${username}/comments/${id}`).remove()
   return {
     type: 'REMOVE_COMMENT',
     i,

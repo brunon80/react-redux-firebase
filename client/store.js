@@ -17,7 +17,7 @@ import thunk from 'redux-thunk';
 const defaultState = {
   profile: {},
   repos: [],
-  comments: []
+  comments: {commentsList:[], isFetching: true}
 };
 
 const enhancers = compose(
