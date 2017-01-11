@@ -12,7 +12,7 @@ const RepositoryList = React.createClass({
                 <div key={i} className="rep-container">
                     <div className="rep-wrapper">
                         <p className="rep-label">Repository Name</p>
-                        <p className="rep-name">{rep.name}</p>
+                        <p className="rep-name"><a href={`https://github.com/${this.props.params.username}/${rep.name}`}>{rep.name}</a></p>
                     </div>
                     <div className="rep-wrapper">
                         <p className="rep-label">Repository Language</p>
