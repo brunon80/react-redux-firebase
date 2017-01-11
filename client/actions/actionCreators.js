@@ -37,7 +37,7 @@ export function fetchGitReps(username) {
   return (dispatch) => {
     axios.get(`https://api.github.com/users/${username}/repos`) // /repos
     .then(function (response) {
-      console.log(response.data);
+      //console.log(response.data);
       return dispatch(fetchGitReposAsync(response.data))
     })
     .catch(function (error) {
@@ -66,19 +66,26 @@ function fetchGitReposAsync(repos) {
 */
 
 
-export function addComment(postId, author, comment) {
+export function addComment(author, comment) {
   return {
     type: 'ADD_COMMENT',
-    postId,
     author, // same as author: author
     comment // same as comment: comment
   };
 }
 
-export function removeComment(postId, i){
+export function editComment(author, comment, i) {
+  return {
+    type: 'EDIT_COMMENT',
+    author, // same as author: author
+    comment, // same as comment: comment
+    i,
+  };
+}
+
+export function removeComment(i){
   return {
     type: 'REMOVE_COMMENT',
     i,
-    postId
   };
 }

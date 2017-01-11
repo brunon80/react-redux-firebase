@@ -48,6 +48,7 @@ body
   border none
   border-left 1px solid #d6d6d6
   border-radius 0 3px 3px 0
+  line-height 2em
   &:hover
     border-color transparent
     background-color lightgray
@@ -85,13 +86,12 @@ body
   color #afb5b6
   margin 0
 
-.profile-github
+.btn-green
   font-size 18px
   text-decoration none
   color #00be8f
   border 2px solid #00be8f
   border-radius 3px
-  width 72%
   text-align center
   margin-top 15px
   transition all 200ms
@@ -161,7 +161,15 @@ body
   margin: 0
   color: #00be8f
 
+
+.comments
+  padding-bottom 25px
+  border-bottom 1px solid lightgray
+
   // LEGADO
+
+.default-margin-top
+  margin-top 40px
 
 .photo-grid
   display flex
@@ -221,12 +229,18 @@ body
     font-size 1.2rem
     margin 0
   strong
-    color blue
+    color #00be8f
     margin-right 5px
+    font-size 15px
   &:hover
     .remove-comment
       opacity 1
  
+.comment-form 
+  border 1px solid lightgray
+  padding 10px
+  border-radius 4px
+
 .comment-form 
   input, textarea
     width 100%
@@ -237,6 +251,7 @@ body
     outline none
     resize vertical
     background transparent
+    
 
 
 .grid-photo-wrap
@@ -267,7 +282,6 @@ button, .button
   background none
   flex-basis 48%
   display inline-block
-  line-height 2
   text-decoration none
   padding 5px
   text-align center

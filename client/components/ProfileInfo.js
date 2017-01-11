@@ -14,7 +14,7 @@ const ProfileInfo = React.createClass({
           <img className="profile-image" src={profile.avatar_url} alt="profile"/>
           <p className="profile-name">{profile.name}</p>
           <p className="profile-about">{profile.bio}</p>
-          <a className="profile-github" href={profile.html_url || '#'}>see my Github</a>
+          <a className="btn-green" href={profile.html_url || '#'}>see my Github</a>
         </div>
         <div className="info-container">
           <div className="info-statics">
