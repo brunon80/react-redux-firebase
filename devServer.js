@@ -22,7 +22,7 @@ app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, 'index.html'))
 })
 
-app.listen(process.env.PORT || 7770, 'localhost', function(err) {
+app.listen(process.env.PORT || 7770, function(err) {
   if (err) {
     console.log(err)
     return
