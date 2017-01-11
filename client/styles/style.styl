@@ -1,6 +1,10 @@
+/*
+  Como a aplcação é pequena resumi o estilo de todos os componentes em um arquivo só
+  Para aplicações maiores faz-se necessário o uso de varios arquivos de estilo, geralmente um para cada componente
+*/
+
 @import '_normalize.styl'
 @import '_typography.styl'
-@import '_animations.styl'
 
 body
   background offwhite
@@ -63,7 +67,7 @@ body
 .left-col
   width 25%
   border-right 2px solid #dedcdc
-  padding-right 25px
+  padding 0 25px
   margin-top 50px
 
 .profile-container
@@ -151,7 +155,7 @@ body
   margin: 10px
   padding: 10px
   border: 2px solid lightgrey
-  min-width 200px
+  width 200px
 
 .rep-label
   font-size: 10px
@@ -176,51 +180,22 @@ body
   max-width 1200px
   margin 0 auto
 
-.grid-figure
-  flex-basis calc(33.333% - 4rem)
-  flex-grow 1
-  flex-shrink 0
-  margin 0 2rem 2rem 2rem
-  padding 2rem
-  border 1px solid lightgray
-  background white
-  box-shadow 0 0 0 5px rgba(0,0,0,0.03);
-  position relative
-
-.single-photo
-  @extend .grid-figure
-  max-width 900px
-  margin 0 auto
-  display flex
-  background white
-  .grid-figure
-    box-shadow none
-    margin 0 2rem 0 0
-    border 0
-    padding 0
-    flex 1 0 60%
-    max-width 60%
-  .comments
-    flex 1 0 40%
-    max-width 40%
-  .grid-photo
-    width 100%
-    margin 0
-
-.grid-photo
-  width calc(100% + 4rem)
-  margin-left -2rem
-  margin-top -2rem
-  max-width none
-
 // Comments
 .remove-comment
-  background none
   border 0
-  line-height 1
-  opacity 0
-  &:hover
-    color red
+  margin 0 10px
+  background-color red
+  color white
+  border-radius 5px
+  padding 7px 18px
+
+.edit-comment
+  border 0
+  background-color #cec500
+  color white
+  border-radius 5px
+  padding 7px 18px
+
 
 .comment
   border-bottom 1px solid lightgrey
@@ -228,13 +203,12 @@ body
   p
     font-size 1.2rem
     margin 0
+    display flex
+    flex-direction column
   strong
     color #00be8f
     margin-right 5px
     font-size 15px
-  &:hover
-    .remove-comment
-      opacity 1
  
 .comment-form 
   border 1px solid lightgray
@@ -256,27 +230,14 @@ body
 
 .grid-photo-wrap
   position relative
-  
-.likes-heart
-  background url(http://f.cl.ly/items/3Y373q2Q3J3Y1j203n0m/Bitmap-3.png) center no-repeat
-  background-size contain
-  font-size 2rem
-  padding 1rem
-  position absolute
-  color blue
-  left 50%
-  top 50%
-  pointer-events none
-  
 
 /*  
   Buttons  
 */
 
-.control-buttons
-  display flex
-  justify-content space-between
-    
+.control-btn-wrapper
+  margin 10px 0
+
 button, .button
   border 2px solid lighten(grey, 90%)
   background none
@@ -289,29 +250,66 @@ button, .button
   transition all 0.2s
   box-sizing padding-box
 
-/*
-  Cowboy style speech bubble - you should probably use an SVG for this if you are doing more icons.
-*/
-.speech-bubble
-  size = 1.25rem
-  width size * 1.2
-  height size 
-  background blue
-  display inline-block
-  border-radius 50%
-  position relative
-  &:after
-    display inline-block
+
+  // Resposividade customizada --Sem grids--
+  
+@media screen and (max-width: 1024px) 
+
+  html
+    font-size 12px
+    font-family sans-serif
+
+  .photo-grid
+    flex-direction column
+  
+  .left-col
+    width: initial
+    border none
+    padding 0
+    margin 50px
+  
+  .other-info
+    display none
+
+  .search-input
+    width initial
+    border none
+    border-radius: 3px
+  
+  .right-col
+    margin 50px
+  
+  .rep-container 
+    margin 5px
+    padding 10px
+    border 2px solid #d3d3d3
+    width 212px
+  
+  .info-container
+    justify-content center
+
+  .search-form
+    position relative
+  
+  .btn-search
     position absolute
-    content ''
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 0 size size 0
-    border-color: transparent blue transparent transparent
-    top 30%
-    left 0
+    right 0
 
-  
-  
 
+
+@media screen and (max-width: 500px) 
+  .header-container
+    flex-direction column
+  
+  .header-title-wrapper
+    margin-bottom 20px
+    
+  .search-form
+    margin 0 auto
+
+  .right-col
+    margin 20px
+  
+  .rep-container
+    width 100%
+    margin 10px 0

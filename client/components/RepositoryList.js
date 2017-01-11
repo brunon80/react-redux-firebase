@@ -1,11 +1,12 @@
-import React from 'react';
-// import Photo from './Photo';
-import Comments from './Comments';
+import React from 'react'
+// import Photo from './Photo'
+import Comments from './Comments'
 
 const RepositoryList = React.createClass({
 
   render() {
-    const { repos, comments  } = this.props;
+    const { repos, comments  } = this.props
+    // retorna uma lista de repositórios
     const repositorylist = repos.map((rep, i) => {
             return (
                 <div key={i} className="rep-container">
@@ -27,14 +28,14 @@ const RepositoryList = React.createClass({
             })
     return (
         <div className="right-col">
-            <Comments {...this.props} comments={comments}/>
+            <Comments {...this.props} comments={comments}/> {/*aproveitando a coluna da direita para por o componente de comentários*/}
             <h1 className="right-col__title">My repositories</h1>
             <div className="repos-wrapper">
                 {repositorylist}
             </div>
         </div>
-    );
+    )
   }
-});
+})
 
-export default RepositoryList;
+export default RepositoryList

@@ -1,21 +1,21 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 
 /*
   Reducers
 
-  Reducers match up the dispatched (fired) action with a function that should be called.
+  Reducers combinama a ação disparada com a função que deveria ser chamada.
 
-  It takes in a copy of state, modifies it, and returns the new state
-  When state gets large, it makes sense to have multiple reducers that only deal with a piece of the state
+  Isso pega uma cópia do state, modifica ela, e retorna um novo state
+  quando se tem muitos stages, faz sentido ter multipos reducers que somente lide com uma parte do state
 
 */
 
-import { routerReducer } from 'react-router-redux'; // we need this for react-router
-import profile from './profile';
-import comments from './comments';
-import repos from './repos';
+import { routerReducer } from 'react-router-redux' // necessário para o react-router
+import profile from './profile'
+import comments from './comments'
+import repos from './repos'
 
-// Combine all our reducers togeher
-const rootReducer = combineReducers({ repos, profile, comments, routing: routerReducer });
+// Combine todos os Reducers em um só
+const rootReducer = combineReducers({ repos, profile, comments, routing: routerReducer })
 
-export default rootReducer;
+export default rootReducer

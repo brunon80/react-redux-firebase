@@ -1,33 +1,27 @@
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actionCreators from '../actions/actionCreators';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as actionCreators from '../actions/actionCreators'
+
+import Main from './Main'
 
 /*
-  Components
-  This is where the actual interface / view comes into play
-  Everything is in Main - so we import that one
-*/
+  Mapeamento
 
-import Main from './Main';
+  Aqui é onde a magica acontece.
 
-/*
-  Mapping
+  Nós temos que dar um jeito de:
+  1. nosso state (nossos dados)
+  2. nosso 'dispatch' de funções 
+  ficarem disponíveis para o componente <Main />.
 
-  This is where the magic of redux comes in.
-
-  We need a way to make
-  1. our state (our data)
-  2. our 'dispatch' functions 
-  available to the <Main /> component.
-
-  We will surface state and functions via props (this.props.whatever)
+  Nós vamos propagar states e funções via props (this.props.whatever)
 
 */
 
 
 /*
-  Here we specify which state needs to be made avaialble to the component
-  our state.posts and state.comments will be available via this.props.posts and this.props.comments
+  Aqui especificamos que estados queremos q fiquem disponiveis inicialmente para nosso componente
+  nossos state.profile, state.comments e state.repos estarão disponíveis via this.props.profile, this.props.comments e this.props.repos
 */
 
 function mapStateToProps(state) {
@@ -35,26 +29,26 @@ function mapStateToProps(state) {
     repos: state.repos,
     profile: state.profile,
     comments : state.comments
-  };
+  }
 }
 
 /*
-  This will bind our actions to dispatch (make the fire-able)
-  and make the actions available via props
+  Isso vai amarrar nossa ações ao dispatch (fazê-las disparáveis)
+  e deixa-las disponíveis via props
 */
 
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch);
+  return bindActionCreators(actionCreators, dispatch)
 }
 
 
 /*
-  Here we create an <App/> component which is just our <Main/> component with it's props
-  populated with our actions and our state
+  Aqui criamos um componente <App/>  que é apenas o <Main/> com seus props
+  populados com nossas ações e states
 
-  We're injecting the data at the top level and passing it down, but you can connect() any component to make the actions and the store available to you. 
+  Estou injetando dados em um nível alto, mas você pode connect() qualquer componente para fazer ações e store disponíveis para você. 
 */
  
-var App = connect(mapStateToProps, mapDispatchToProps)(Main);
+var App = connect(mapStateToProps, mapDispatchToProps)(Main)
 
-export default App;
+export default App

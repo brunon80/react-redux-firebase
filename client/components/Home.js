@@ -1,14 +1,12 @@
-import React from 'react';
-// import Photo from './Photo';
-import Comments from './Comments';
+import React from 'react'
 
-const Home = React.createClass({
+class Home extends React.Component{
 
   render() {
     return (
-      <img src="http://femgineer.com/images/logos/github-logo.png" alt="" />
-    );
+      <img src="http://femgineer.com/images/logos/github-logo.png" alt="Github logo" />
+    )
   }
-});
+}
 
-export default Home;
+export default Home

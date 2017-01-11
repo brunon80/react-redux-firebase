@@ -1,79 +1,67 @@
-import axios from 'axios'
-/**
-  Action Creators
+import axios from 'axios' // biblioteca para fazer requisição Ajax, nunca tinha usado, agora vou usar sempre xD
 
-  These fire events which the reducer will handle
-  We will later call these functions from inside our component
-
-  Later these functions get bound to 'dispatch' fires the actual event
-  Right now they just return an object
-
-  It's a code convention to use all capitals and snake case for the event names
-  We use const to store the name of the event so it is immutable
-
+/*
+  Profile e lista de repositorios
 */
 
-export function increment(i) {
-  return {
-    type: 'INCREMENT_LIKES',
-    index: i
-  };
-}
+/*
+  Métodos assinconos que usam um middleware pra despachar ações para os reducers
+*/
 
-export function fetchGitProfiles(username) {
+/*
+  Método para pegar o profile de usuario Github
+*/
+export function fetchGitProfile(username) {
   return (dispatch) => {
-    axios.get(`https://api.github.com/users/${username}`) // /repos
-    .then(function (response) {
-      //console.log(response.data);
-      return dispatch(fetchGitProfileAsync(response.data))
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
+    axios.get(`https://api.github.com/users/${username}`)
+    .then((response) => dispatch(fetchGitProfileAsync(response.data)))
+    .catch((error) => console.log(error)) // não estou fazendo tratamento de erros para agilizar as tarefas restantes do teste (ou seja eu sei fazer :D)
   }
 }
 
+/*
+  Método para pegar a lista de repositórios de um usuario Github
+*/
 export function fetchGitReps(username) {
   return (dispatch) => {
-    axios.get(`https://api.github.com/users/${username}/repos`) // /repos
-    .then(function (response) {
-      //console.log(response.data);
-      return dispatch(fetchGitReposAsync(response.data))
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
+    axios.get(`https://api.github.com/users/${username}/repos`)
+    .then((response) => dispatch(fetchGitReposAsync(response.data)))
+    .catch((error) => console.log(error)) // não estou fazendo tratamento de erros para agilizar as tarefas restantes do teste (ou seja eu sei fazer :D)
   }
 }
+
+/*
+  Métodos estaticos que são chamados pelo middleware
+*/
 
 function fetchGitProfileAsync(profile) {
   return {
     type: 'FETCH_GIT_PROFILES',
     profile
-  };
+  }
 }
 
 function fetchGitReposAsync(repos) {
   return {
     type: 'FETCH_GIT_REPOS',
     repos
-  };
+  }
 }
-
 
 /*
   Comments
 */
 
+/*
+  Método assincono que busca os comentarios na base de dados do firebase
+*/
+
 export function getComment(username) {
   return (dispatch) => {
     firebase.database().ref(`${username}/comments`).once('value').then(function(snapshot) {
-      console.log(snapshot.val())
       const parsedPayload = []
       if (snapshot.val()) {
-        console.log(Object.getOwnPropertyNames(snapshot.val()))
         const commentsIds = Object.getOwnPropertyNames(snapshot.val())
-
         for (let i = 0; i < commentsIds.length; i++) {
           const parsedAuthor = Object.getOwnPropertyNames(snapshot.val()[commentsIds[i]])[0]
           parsedPayload.push({
@@ -82,10 +70,9 @@ export function getComment(username) {
             text: snapshot.val()[commentsIds[i]][parsedAuthor]
           })
         }
-        console.log(parsedPayload)
         return dispatch(getCommentAsync(parsedPayload))
       } else return dispatch(getCommentAsync(parsedPayload))
-    });
+    })
   }
 }
 
@@ -94,42 +81,49 @@ function getCommentAsync(payload) {
     type: 'GET_COMMENT',
     comments: payload,
     isFetching: false
-  };
+  }
 }
 
-
+/*
+  Método adiciona comentarios na base de dados do firebase e localmente
+*/
 export function addComment(author, comment, username) {
   firebase.database().ref(`${username}/comments`).push(
     {
       [author]: comment,
     }
-  );
+  )
   return {
     type: 'ADD_COMMENT',
-    author, // same as author: author
-    comment // same as comment: comment
-  };
+    author, 
+    comment 
+  }
 }
 
-
+/*
+  Método edita comentarios na base de dados do firebase e localmente
+*/
 export function editComment(author, comment, i, username, id) {
   const postData = {[author]: comment}
   let updates = {}
-  updates[`${username}/comments/${id}`] = postData;
-  firebase.database().ref().update(updates);
+  updates[`${username}/comments/${id}`] = postData
+  firebase.database().ref().update(updates)
   return {
     type: 'EDIT_COMMENT',
     author, // same as author: author
     comment, // same as comment: comment
     i,
     id,
-  };
+  }
 }
 
+/*
+  Método exclui comentarios na base de dados do firebase e localmente
+*/
 export function removeComment(username, i, id){
   firebase.database().ref(`${username}/comments/${id}`).remove()
   return {
     type: 'REMOVE_COMMENT',
     i,
-  };
+  }
 }

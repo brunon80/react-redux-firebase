@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 class Comments extends React.Component{
   constructor(props) {
@@ -13,6 +13,8 @@ class Comments extends React.Component{
     }
   }
 
+// toggle pra abrir e fechar o form de edição
+
   showEditFields(index) {
     this.setState({
       isFieldOpened: !this.state.isFieldOpened,
@@ -20,15 +22,16 @@ class Comments extends React.Component{
     })
   }
 
+// retorna um comentário
   renderComment(comment, i) {
     return (
       <div className="comment" key={i}>
         <p>
           <strong>{comment.user}:</strong>
           {comment.text}
-          <span className="flex flex-center">
-            <button className="remove-comment" onClick={() => this.showEditFields(i)}>edit</button>
-            <button className="remove-comment" onClick={() => this.props.removeComment(this.props.params.username, i, comment.id)}>&times;</button>
+          <span className="control-btn-wrapper">
+            <button className="edit-comment" onClick={() => this.showEditFields(i)}>edit</button>
+            <button className="remove-comment" onClick={() => this.props.removeComment(this.props.params.username, i, comment.id)}>Remove</button>
           </span>
         </p>
         {
@@ -40,32 +43,39 @@ class Comments extends React.Component{
             </form>
         }
       </div>
-    );
+    )
   }
 
+// submeter uma edição
   handleEditSubmit(index, id) {
+    /*
+      this não está disponvel no retorno da função pois o contexto é outro
+      então faz-se: const that = this, como um truque onde a referência pode ser pega dentro no novo contexto
+    */
     const that = this
     return (event) => {
       event.preventDefault()
-      console.log(index)
       that.showEditFields(index)
       if (that.refs.editedAuthor.value && that.refs.editedAuthor.value) {
-        that.props.editComment(that.refs.editedAuthor.value, that.refs.editedAuthor.value, index, that.props.params.username, id);
+        that.props.editComment(that.refs.editedAuthor.value, that.refs.editedComment.value, index, that.props.params.username, id)
       }
 
     }
   }
 
+// submeter uma adição de comentario
   handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
     if (this.refs.author.value && this.refs.comment.value) {
-      this.props.addComment(this.refs.author.value, this.refs.comment.value, this.props.params.username);
+      this.props.addComment(this.refs.author.value, this.refs.comment.value, this.props.params.username)
     }
-    this.commentForm.reset();
+    this.commentForm.reset()
   }
+
+
   render() {
 
-    const { commentsList, isFetching } = this.props.comments;
+    const { commentsList, isFetching } = this.props.comments
     return (
       <div className="comments">
         <h1 className="right-col__title">Comments</h1>
@@ -85,8 +95,8 @@ class Comments extends React.Component{
           <button type="submit" className="btn-green">Send comment</button>
         </form>
       </div>
-    );
+    )
   }
-};
+}
 
-export default Comments;
+export default Comments

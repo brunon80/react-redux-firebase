@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router';
+import React from 'react'
+import { Link } from 'react-router'
 
 class Main extends React.Component{
 
@@ -8,13 +8,15 @@ class Main extends React.Component{
     this.submitSearch = this.submitSearch.bind(this)
   }
 
+  // envia a requisição de um novo profile
   submitSearch(event) {
     event.preventDefault()
-    if (this.searchField.value) this.context.router.push(`/profile/${this.searchField.value}`)
+    const urlUsername = this.searchField.value.trim().toLowerCase()
+    if (urlUsername) this.context.router.push(`/profile/${urlUsername}`)
+    this.searchForm.reset()
   }
 
   render() {
-    // Then we go ahead and return some JSX
     return (
       <div>
         <header className="header-container">
@@ -24,21 +26,22 @@ class Main extends React.Component{
             </Link>
             <h1 className="header-title">Github profile search</h1>
           </div>
-          <form onSubmit={this.submitSearch} className="search-form">
+          <form ref={(searchForm) => {this.searchForm = searchForm}} onSubmit={this.submitSearch} className="search-form">
             <input ref={(searchField) => { this.searchField = searchField }} className="search-input" placeholder="Search here a user" type="text" />
             <button className="btn-search" type="submit">GO!</button>
           </form>
         </header>
-        {/* We use cloneElement here so we can auto pass down props */}
+        {/* Usando cloneElement aqui podemos passar props para baixo */}
         { React.cloneElement(this.props.children, this.props) }
       </div>
-    );
+    )
   }
 
-};
+}
 
+// aqui extraio o metodo push do react-router para levar a uma pagina interna de profile 
 Main.contextTypes = {
     router: React.PropTypes.object.isRequired,
 }
 
-export default Main;
+export default Main
