@@ -17,7 +17,7 @@ class Comments extends React.Component{
 
   showEditFields(index) {
     this.setState({
-      isFieldOpened: !this.state.isFieldOpened,
+      isFieldOpened: this.state.isFieldOpened && index !== this.state.index ? true : !this.state.isFieldOpened,
       index,
     })
   }
@@ -36,10 +36,10 @@ class Comments extends React.Component{
           </span>
         </p>
         {
-          this.state.index === i && this.state.isFieldOpened &&
-            <form onSubmit={this.handleEditSubmit(i, comment.id, firebase)} ref={ (editForm) => {this.editForm = editForm} } className="comment-form">
+          (this.state.index === i && this.state.isFieldOpened) &&
+            <form onSubmit={this.handleEditSubmit(i, comment.id, firebase)} ref={ (editForm) => {this.editForm = editForm} } className="comment-edit-form ">
               <input type="text" ref="editedAuthor" placeholder="author" defaultValue={comment.user}/>
-              <input type="text" ref="editedComment" placeholder="comment" defaultValue={comment.text}/>
+              <textarea ref="editedComment" placeholder="comment" defaultValue={comment.text}/>
               <button type="submit" className="btn-green">Done!</button>
             </form>
         }

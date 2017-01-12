@@ -10,19 +10,20 @@ class RepositoryList extends React.Component{
     const repositorylist = repos.map((rep, i) => {
             return (
                 <div key={i} className="rep-container">
-                    <div className="rep-wrapper">
-                        <p className="rep-label">Repository Name</p>
-                        <p className="rep-name"><a href={`https://github.com/${this.props.params.username}/${rep.name}`}>{rep.name}</a></p>
-                    </div>
-                    <div className="rep-wrapper">
-                        <p className="rep-label">Repository Language</p>
-                        <p className="rep-language">{rep.language}</p>
-                    </div>
-                    <div className="rep-wrapper">
-                        <p className="rep-label">Repository privacy</p>
-                        <p className="rep-privacy">{rep.private ? 'Closed' : 'Opened'}</p>
-                    </div>
-                    
+                    <a className="rep-link" href={`https://github.com/${this.props.params.username}/${rep.name}`}>
+                        <div className="rep-wrapper">
+                            <p className="rep-label">Repository Name</p>
+                            <p className="rep-name">{rep.name}</p>
+                        </div>
+                        <div className="rep-wrapper">
+                            <p className="rep-label">Repository Language</p>
+                            <p className="rep-language">{rep.language}</p>
+                        </div>
+                        <div className="rep-wrapper">
+                            <p className="rep-label">Repository privacy</p>
+                            <p className="rep-privacy">{rep.private ? 'Closed' : 'Opened'}</p>
+                        </div>
+                    </a>
                 </div>
             )
             })

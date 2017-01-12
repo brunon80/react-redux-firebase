@@ -4,7 +4,7 @@ class Home extends React.Component{
 
   render() {
     return (
-      <img src="http://femgineer.com/images/logos/github-logo.png" alt="Github logo" />
+      <img className="home-img" src="http://femgineer.com/images/logos/github-logo.png" alt="Github logo" />
     )
   }
 }
