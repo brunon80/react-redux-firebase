@@ -1,61 +1,91 @@
-// import expect from 'expect';
-// import commentsReducer from '../../client/reducers/comments';
-// import defaultComments from '../../client/data/comments';
+import expect from 'expect'
+import comments from '../../client/reducers/comments'
 
-// describe('Coments Reducer', function () {
-  
-//   describe('Adding a comment', ()=>{
+describe('Coments Reducer', function () {
 
-//     const author = 'Wes Bos';
-//     const comment = 'Cool!';
-//     const expected = {user: author, text: comment};
+    describe('Adding a comment', () => {
+
+        const author = 'Bruno Rolim'
+        const comment = 'Cool!'
+        const expected = { user: author, text: comment }
+        const defaultComments = {
+            commentsList: []
+        }
+
+        function addComment() {
+            const action = { type: 'ADD_COMMENT', author, comment }
+            const commentJson = comments(defaultComments, action)
+            return commentJson.commentsList
+        }
+
+        it('should be able to add a new comment to an profile', () => {
+            const profileComments = addComment()
+            expect(profileComments[0]).toEqual(expected)
+        })
+
+        it('should add increase the length of the array by 1', () => {
+            const profileComments = addComment()
+            expect(profileComments.length).toEqual(defaultComments.commentsList.length + 1)
+        })
+
+    })
+
+    describe('Removing a comment', function () {
+        let comment1, comment2, commentState, updatedCommentsState
+
+        before(() => {
+            let action = { type: 'REMOVE_COMMENT', i: 0 }
+            comment1 = { text: 'Great looking sandwich!', user: 'Bruno' }
+            comment2 = { text: 'That dog though!', user: 'Andrody' }
+            commentState = { commentsList: [comment1, comment2] }
+            updatedCommentsState = comments(commentState, action)
+            // console.log('-----------------------------------------------------------')
+        })
+
+        it('should remove a comment',()=> {
+          expect(updatedCommentsState.commentsList).toExclude(comment1)
+        })
+
+        it('should decrease the length of the array by 1', ()=> {
+          expect(updatedCommentsState.commentsList.length).toEqual(commentState.commentsList.length - 1)
+        })
+
+    })
     
-//     /* add duplicate function into a handy function since only postId changes */  
-//     function addComment(postId) {
-//       const action = { type: 'ADD_COMMENT', author, comment, postId };
-//       const allComments = commentsReducer(defaultComments, action);
-//       return allComments[postId];
-//     }
+    describe('Get comment`s list', function () {
+        let commentsArray, updatedCommentsState
 
-//     it('should be able to add a new comment to an existing post',()=>{
-//       const postComments = addComment('BAhvZrRwcfu');
-//       expect(postComments[postComments.length - 1]).toEqual(expected);
-//     });
+        before(() => {
+            commentsArray = [{ text: 'Great looking sandwich!', user: 'Bruno' }, { text: 'That dog though!', user: 'Andrody' }]
+            let action = { type: 'GET_COMMENT', comments: commentsArray, isFetching: false }
+            updatedCommentsState = comments(commentsArray, action)
+        })
 
-//     it('should be able to add a new comment to a new post',()=>{
-//       const postComments = addComment('123-i-dont-exist');
-//       expect(postComments[postComments.length - 1]).toEqual(expected);
-//     });
+        it('should return a comment`s list',()=> {
+            expect(updatedCommentsState.commentsList).toEqual(commentsArray)
+        })
 
-//     it('should add increase the length of the array by 1',()=>{
-//       const postComments = addComment('BAPIPRjQce9');
-//       expect(postComments.length).toEqual(defaultComments['BAPIPRjQce9'].length + 1);
-//     });
+    })
 
-//   }); 
+    describe('Edit a comment', function () {
+        let comment1, comment2, commentState, updatedCommentsState
 
-//   describe('Removing a comment', function() {
-//     var comment1, comment2, commentState, updatedCommentsState, postId;
+        before(() => {
+            let action = { type: 'EDIT_COMMENT', i: 0, comment: 'Great looking Toast!', author: 'Bruno', id: '-kjsdhflSDFG' }
+            comment1 = { text: 'Great looking sandwich!', user: 'Bruno' }
+            comment2 = { text: 'That dog though!', user: 'Andrody' }
+            commentState = { commentsList: [comment1, comment2] }
+            updatedCommentsState = comments(commentState, action)
+        })
 
-//     before(()=> {
-//       postId = 'BAcyDyQwcXX'
-//       var action = { type: 'REMOVE_COMMENT', i: 0, postId }; 
-//       comment1 = { text: 'Great looking sandwich!', user: 'wesbos' };
-//       comment2 = { text: 'That dog though!', user: 'kaitbos' };
-//       commentState = { [postId] : [ comment1, comment2 ] };
-//       updatedCommentsState = commentsReducer(commentState, action);
-//     });
-    
-//     it('should remove a comment',()=> {
-//       expect(updatedCommentsState[postId]).toExclude(comment1);
-//     });
-    
-//     it('should decrease the length of the array by 1', ()=> {
-//       expect(updatedCommentsState[postId].length).toEqual(commentState[postId].length - 1);
-//     });
+        it('should edit the first comment',()=> {
+          expect(updatedCommentsState.commentsList[0]).toNotEqual(comment1)
+        })
 
-//   })
+        it('should keep same length of the original array', ()=> {
+          expect(updatedCommentsState.commentsList.length).toEqual(commentState.commentsList.length)
+        })
 
+    })
 
-
-// })
+})

@@ -16,7 +16,7 @@ function comments(state = {}, action) {
       case 'EDIT_COMMENT':
         return {commentsList: [
           ...state.commentsList.slice(0, action.i),
-          {...state.commentsList[action.i], user: action.author, text: action.comment, id: action.id},
+          ...state.commentsList[action.i], {user: action.author, text: action.comment, id: action.id},
           ...state.commentsList.slice(action.i + 1)
         ]}
       case 'GET_COMMENT':
