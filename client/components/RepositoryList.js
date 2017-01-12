@@ -2,10 +2,10 @@ import React from 'react'
 // import Photo from './Photo'
 import Comments from './Comments'
 
-const RepositoryList = React.createClass({
+class RepositoryList extends React.Component{
 
   render() {
-    const { repos, comments  } = this.props
+    const { repos, comments, firebase } = this.props
     // retorna uma lista de repositórios
     const repositorylist = repos.map((rep, i) => {
             return (
@@ -28,7 +28,7 @@ const RepositoryList = React.createClass({
             })
     return (
         <div className="right-col">
-            <Comments {...this.props} comments={comments}/> {/*aproveitando a coluna da direita para por o componente de comentários*/}
+            <Comments {...this.props} comments={comments} firebase={firebase}/>
             <h1 className="right-col__title">My repositories</h1>
             <div className="repos-wrapper">
                 {repositorylist}
@@ -36,6 +36,6 @@ const RepositoryList = React.createClass({
         </div>
     )
   }
-})
+}
 
 export default RepositoryList

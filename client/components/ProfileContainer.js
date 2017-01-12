@@ -1,4 +1,5 @@
 import React from 'react'
+import firebase from 'firebase'
 import ProfileInfo from './ProfileInfo'
 import RepositoryList from './RepositoryList'
 
@@ -23,7 +24,7 @@ class ProfileContainer extends React.Component{
       messagingSenderId: '98839263065'
     }
     firebase.initializeApp(config)
-    this.props.getComment(username)
+    this.props.getComment(username, firebase)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -32,7 +33,7 @@ class ProfileContainer extends React.Component{
       const newUsername = nextProps.params.username
       this.props.fetchGitProfile(newUsername)
       this.props.fetchGitReps(newUsername)
-      this.props.getComment(newUsername)
+      this.props.getComment(newUsername, firebase)
     }
 
   }
@@ -43,7 +44,7 @@ class ProfileContainer extends React.Component{
     return (
       <div className="photo-grid">
           <ProfileInfo {...this.props} profile={profile} />
-          <RepositoryList {...this.props} reposList={repos} />
+          <RepositoryList {...this.props} reposList={repos} firebase={firebase} />
       </div>
     )
   }

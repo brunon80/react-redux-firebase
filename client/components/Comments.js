@@ -24,6 +24,7 @@ class Comments extends React.Component{
 
 // retorna um comentário
   renderComment(comment, i) {
+    const {firebase, removeComment, params} = this.props
     return (
       <div className="comment" key={i}>
         <p>
@@ -31,12 +32,12 @@ class Comments extends React.Component{
           {comment.text}
           <span className="control-btn-wrapper">
             <button className="edit-comment" onClick={() => this.showEditFields(i)}>edit</button>
-            <button className="remove-comment" onClick={() => this.props.removeComment(this.props.params.username, i, comment.id)}>Remove</button>
+            <button className="remove-comment" onClick={() => removeComment(params.username, i, comment.id, firebase)}>Remove</button>
           </span>
         </p>
         {
           this.state.index === i && this.state.isFieldOpened &&
-            <form onSubmit={this.handleEditSubmit(i, comment.id)} ref={ (editForm) => {this.editForm = editForm} } className="comment-form">
+            <form onSubmit={this.handleEditSubmit(i, comment.id, firebase)} ref={ (editForm) => {this.editForm = editForm} } className="comment-form">
               <input type="text" ref="editedAuthor" placeholder="author" defaultValue={comment.user}/>
               <input type="text" ref="editedComment" placeholder="comment" defaultValue={comment.text}/>
               <button type="submit" className="btn-green">Done!</button>
@@ -47,7 +48,7 @@ class Comments extends React.Component{
   }
 
 // submeter uma edição
-  handleEditSubmit(index, id) {
+  handleEditSubmit(index, id, firebase) {
     /*
       this não está disponvel no retorno da função pois o contexto é outro
       então faz-se: const that = this, como um truque onde a referência pode ser pega dentro no novo contexto
@@ -57,7 +58,7 @@ class Comments extends React.Component{
       event.preventDefault()
       that.showEditFields(index)
       if (that.refs.editedAuthor.value && that.refs.editedAuthor.value) {
-        that.props.editComment(that.refs.editedAuthor.value, that.refs.editedComment.value, index, that.props.params.username, id)
+        that.props.editComment(that.refs.editedAuthor.value, that.refs.editedComment.value, index, that.props.params.username, id, firebase)
       }
 
     }
@@ -67,7 +68,7 @@ class Comments extends React.Component{
   handleSubmit(e) {
     e.preventDefault()
     if (this.refs.author.value && this.refs.comment.value) {
-      this.props.addComment(this.refs.author.value, this.refs.comment.value, this.props.params.username)
+      this.props.addComment(this.refs.author.value, this.refs.comment.value, this.props.params.username, this.props.firebase)
     }
     this.commentForm.reset()
   }

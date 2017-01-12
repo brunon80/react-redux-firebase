@@ -1,21 +1,21 @@
 {
-  "name": "learn-redux",
+  "name": "reactreduxfirebase-dev",
   "version": "1.0.0",
   "description": ":) ",
   "scripts": {
     "build:webpack": "NODE_ENV=production webpack --config webpack.config.prod.js",
     "build": "npm run clean && npm run build:webpack",
-    "test": "NODE_ENV=production mocha './tests/**/*.spec.js' --compilers js:babel-core/register",
+    "test": "SET NODE_ENV=production & mocha tests/**/*.spec.js --compilers js:babel-core/register",
     "clean": "rimraf dist",
     "start": "node devServer.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wesbos/Learn-Redux.git"
+    "url": "https://github.com/brunon80"
   },
-  "author": "Wes Bos",
+  "author": "Bruno Rolim",
   "license": "MIT",
-  "homepage": "https://github.com/wesbos/Learn-Redux",
+  "homepage": "https://reactreduxfirebase-dev.herokuapp.com/",
   "dependencies": {
     "axios": "^0.15.3",
     "babel-core": "^6.5.2",
@@ -32,9 +32,11 @@
     "eslint-plugin-babel": "^3.1.0",
     "eslint-plugin-react": "^4.1.0",
     "express": "^4.13.4",
+    "firebase": "^3.6.5",
     "raven-js": "^2.1.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^0.14.7",
+    "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^4.4.0",
     "react-router": "^2.7.0",
@@ -53,10 +55,12 @@
     "webpack-hot-middleware": "^2.7.1"
   },
   "devDependencies": {
+    "babel-plugin-react-transform": "^2.0.2",
     "expect": "^1.14.0",
     "expect-jsx": "^2.3.0",
     "mocha": "^2.4.5",
-    "react-addons-test-utils": "^0.14.7"
+    "react-addons-test-utils": "^0.14.7",
+    "react-transform-hmr": "^1.0.4"
   },
   "babel": {
     "presets": [

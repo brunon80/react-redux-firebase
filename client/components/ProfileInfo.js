@@ -1,16 +1,15 @@
 import React from 'react'
 import Comments from './Comments'
-import CSSTransitionGroup from 'react-addons-css-transition-group'
 import { Link } from 'react-router'
 
-class ProfileInfo extends React.Component{
+class ProfileInfo extends React.Component {
 
   render() {
     const { profile } = this.props
     return (
       <section className="left-col">
         <div className="profile-container">
-          <img className="profile-image" src={profile.avatar_url} alt="profile"/>
+          <img className="profile-image" src={profile.avatar_url} alt="profile" />
           <p className="profile-name">{profile.name}</p>
           <p className="profile-about">{profile.bio}</p>
           <a className="btn-green" href={profile.html_url || '#'}>see my Github</a>

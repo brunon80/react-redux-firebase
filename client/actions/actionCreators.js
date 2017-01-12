@@ -34,14 +34,14 @@ export function fetchGitReps(username) {
   Métodos estaticos que são chamados pelo middleware
 */
 
-function fetchGitProfileAsync(profile) {
+export function fetchGitProfileAsync(profile) {
   return {
     type: 'FETCH_GIT_PROFILES',
     profile
   }
 }
 
-function fetchGitReposAsync(repos) {
+export function fetchGitReposAsync(repos) {
   return {
     type: 'FETCH_GIT_REPOS',
     repos
@@ -56,27 +56,29 @@ function fetchGitReposAsync(repos) {
   Método assincono que busca os comentarios na base de dados do firebase
 */
 
-export function getComment(username) {
-  return (dispatch) => {
-    firebase.database().ref(`${username}/comments`).once('value').then(function(snapshot) {
-      const parsedPayload = []
-      if (snapshot.val()) {
-        const commentsIds = Object.getOwnPropertyNames(snapshot.val())
-        for (let i = 0; i < commentsIds.length; i++) {
-          const parsedAuthor = Object.getOwnPropertyNames(snapshot.val()[commentsIds[i]])[0]
-          parsedPayload.push({
-            id: commentsIds[i],
-            user: parsedAuthor,
-            text: snapshot.val()[commentsIds[i]][parsedAuthor]
-          })
-        }
-        return dispatch(getCommentAsync(parsedPayload))
-      } else return dispatch(getCommentAsync(parsedPayload))
-    })
-  }
+export function getComment(username, firebase) {
+  if (firebase) {
+    return (dispatch) => {
+        const parsedPayload = []
+        firebase.database().ref(`${username}/comments`).once('value').then(function(snapshot) {
+        if (snapshot.val()) {
+          const commentsIds = Object.getOwnPropertyNames(snapshot.val())
+          for (let i = 0; i < commentsIds.length; i++) {
+            const parsedAuthor = Object.getOwnPropertyNames(snapshot.val()[commentsIds[i]])[0]
+            parsedPayload.push({
+              id: commentsIds[i],
+              user: parsedAuthor,
+              text: snapshot.val()[commentsIds[i]][parsedAuthor]
+            })
+          }
+          return dispatch(getCommentAsync(parsedPayload))
+        } else return dispatch(getCommentAsync(parsedPayload))
+      })
+    }
+  } else return dispatch(getCommentAsync([]))
 }
 
-function getCommentAsync(payload) {
+export function getCommentAsync(payload) {
   return {
     type: 'GET_COMMENT',
     comments: payload,
@@ -87,12 +89,14 @@ function getCommentAsync(payload) {
 /*
   Método adiciona comentarios na base de dados do firebase e localmente
 */
-export function addComment(author, comment, username) {
-  firebase.database().ref(`${username}/comments`).push(
-    {
-      [author]: comment,
-    }
-  )
+export function addComment(author, comment, username, firebase) {
+  if (firebase) {
+    firebase.database().ref(`${username}/comments`).push(
+      {
+        [author]: comment,
+      }
+    )
+  }
   return {
     type: 'ADD_COMMENT',
     author, 
@@ -103,15 +107,17 @@ export function addComment(author, comment, username) {
 /*
   Método edita comentarios na base de dados do firebase e localmente
 */
-export function editComment(author, comment, i, username, id) {
-  const postData = {[author]: comment}
-  let updates = {}
-  updates[`${username}/comments/${id}`] = postData
-  firebase.database().ref().update(updates)
+export function editComment(author, comment, i, username, id, firebase) {
+  if (firebase) {
+    const postData = {[author]: comment}
+    let updates = {}
+    updates[`${username}/comments/${id}`] = postData
+    firebase.database().ref().update(updates)
+  }
   return {
     type: 'EDIT_COMMENT',
-    author, // same as author: author
-    comment, // same as comment: comment
+    author, 
+    comment, 
     i,
     id,
   }
@@ -120,8 +126,8 @@ export function editComment(author, comment, i, username, id) {
 /*
   Método exclui comentarios na base de dados do firebase e localmente
 */
-export function removeComment(username, i, id){
-  firebase.database().ref(`${username}/comments/${id}`).remove()
+export function removeComment(username, i, id, firebase){
+  if (firebase) firebase.database().ref(`${username}/comments/${id}`).remove()
   return {
     type: 'REMOVE_COMMENT',
     i,

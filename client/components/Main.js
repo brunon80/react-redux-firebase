@@ -18,7 +18,7 @@ class Main extends React.Component{
 
   render() {
     return (
-      <div>
+      <section>
         <header className="header-container">
           <div className="header-title-wrapper"> 
             <Link to={'/'}>
@@ -32,8 +32,8 @@ class Main extends React.Component{
           </form>
         </header>
         {/* Usando cloneElement aqui podemos passar props para baixo */}
-        { React.cloneElement(this.props.children, this.props) }
-      </div>
+        { this.props && React.cloneElement(this.props.children, this.props) }
+      </section>
     )
   }
 
@@ -41,7 +41,7 @@ class Main extends React.Component{
 
 // aqui extraio o metodo push do react-router para levar a uma pagina interna de profile 
 Main.contextTypes = {
-    router: React.PropTypes.object.isRequired,
+    router: React.PropTypes.object,
 }
 
 export default Main
