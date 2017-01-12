@@ -92,7 +92,7 @@ class Comments extends React.Component{
         <h2 className="right-col__title default-margin-top">Write a comment</h2>
         <form onSubmit={this.handleSubmit} ref={(commentForm) => {this.commentForm = commentForm}} className="comment-form">
           <input type="text" ref="author" placeholder="author"/>
-          <input type="text" ref="comment" placeholder="comment"/>
+          <textarea ref="comment" placeholder="comment"/>
           <button type="submit" className="btn-green">Send comment</button>
         </form>
       </div>
