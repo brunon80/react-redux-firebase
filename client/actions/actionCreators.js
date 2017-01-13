@@ -1,5 +1,14 @@
 import axios from 'axios' // biblioteca para fazer requisição Ajax, nunca tinha usado, agora vou usar sempre xD
 
+
+export function stopLoading() {
+    return {
+        type: 'STOP_LOADING',
+        loading: false,
+    }
+}
+
+
 /*
   Profile e lista de repositorios
 */
@@ -40,7 +49,10 @@ export function resetGitRepos() {
 export function fetchGitProfile(username) {
     return (dispatch) => {
         axios.get(`https://api.github.com/users/${username}`)
-    .then(response => dispatch(fetchGitProfileAsync(response.data)))
+    .then((response) => {
+        dispatch(stopLoading())
+        dispatch(fetchGitProfileAsync(response.data))
+    })
     .catch(error => console.log(error)) // não estou fazendo tratamento de erros para agilizar as tarefas restantes do teste (ou seja eu sei fazer :D)
     }
 }

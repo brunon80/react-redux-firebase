@@ -14,8 +14,9 @@ import { routerReducer } from 'react-router-redux' // necessário para o react-r
 import profile from './profile'
 import comments from './comments'
 import repos from './repos'
+import loading from './loading'
 
 // Combine todos os Reducers em um só
-const rootReducer = combineReducers({ repos, profile, comments, routing: routerReducer })
+const rootReducer = combineReducers({ loading, repos, profile, comments, routing: routerReducer })
 
 export default rootReducer

@@ -13,6 +13,7 @@ import rootReducer from './reducers/index'
 */
 
 const defaultState = {
+    loading: true,
     profile: {},
     repos: [],
     comments: { commentsList: [], isFetching: true },

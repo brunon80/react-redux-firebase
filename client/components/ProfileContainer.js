@@ -95,25 +95,34 @@ class ProfileContainer extends React.Component {
     }
 
     render() {
-        const { profile, repos, comments } = this.props
+        const { profile, repos, comments, loading } = this.props
         return (
-            <div className="photo-grid">
-                <ProfileInfo {...this.props} profile={profile} />
-                <div className="right-col">
-                    <Comments
-                      {...this.props}
-                      ref={(commentsComp) => { this.commentsComp = commentsComp }}
-                      comments={comments}
-                      firebase={firebase}
-                      showEditFields={this.showEditFields}
-                      index={this.state.index}
-                      isFieldOpened={this.state.isFieldOpened}
-                      handleEditSubmit={this.handleEditSubmit}
-                      handleSubmit={this.handleSubmit}
-                    />
-                    <RepositoryList {...this.props} reposList={repos} firebase={firebase} />
+            loading ?
+                <div className="spinner">
+                    <div className="rect1"></div>
+                    <div className="rect2"></div>
+                    <div className="rect3"></div>
+                    <div className="rect4"></div>
+                    <div className="rect5"></div>
                 </div>
-            </div>
+            :
+                <div className="photo-grid">
+                    <ProfileInfo {...this.props} profile={profile} />
+                    <div className="right-col">
+                        <Comments
+                          {...this.props}
+                          ref={(commentsComp) => { this.commentsComp = commentsComp }}
+                          comments={comments}
+                          firebase={firebase}
+                          showEditFields={this.showEditFields}
+                          index={this.state.index}
+                          isFieldOpened={this.state.isFieldOpened}
+                          handleEditSubmit={this.handleEditSubmit}
+                          handleSubmit={this.handleSubmit}
+                        />
+                        <RepositoryList {...this.props} reposList={repos} firebase={firebase} />
+                    </div>
+                </div>
         )
     }
 }

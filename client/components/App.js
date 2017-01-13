@@ -26,6 +26,7 @@ import Main from './Main'
 
 function mapStateToProps(state) {
     return {
+        loading: state.loading,
         repos: state.repos,
         profile: state.profile,
         comments: state.comments,
