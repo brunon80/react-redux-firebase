@@ -2,10 +2,10 @@
 
 ## This is a React, Redux, Firebase Project
 
-### To see in action, clone this repository and run 'npm start'
-### And to test,run 'npm test'
+### To see in action, clone this repository and run 'npm install' and 'npm start'
+### And to test, run 'npm test'
 
-[Cllick here to see on Heroku!](https://reactreduxfirebase-dev.herokuapp.com)
+[Click here to see on Heroku!](https://reactreduxfirebase-dev.herokuapp.com)
 
 ### Profile Image
 
