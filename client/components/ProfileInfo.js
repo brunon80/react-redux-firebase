@@ -30,8 +30,12 @@ class ProfileInfo extends React.Component {
                     <p className="other-info-title">
                         Others Informations
                     </p>
-                    <p className="other-info-item">{profile.email}</p>
-                    <p className="other-info-item">{profile.blog}</p>
+                    <p className="other-info-item">
+                        <a href={`mailto:${profile.email}`}>{profile.email}</a>
+                    </p>
+                    <p className="other-info-item">
+                        <a href={profile.blog}>{profile.blog}</a>
+                    </p>
                     <p className="other-info-item">{profile.company}</p>
                     <p className="other-info-item">{profile.location}</p>
                 </div>
