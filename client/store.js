@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { browserHistory } from 'react-router'
 import rootReducer from './reducers/index'
-import thunk from 'redux-thunk'
 
 /*
   Store
@@ -13,14 +13,14 @@ import thunk from 'redux-thunk'
 */
 
 const defaultState = {
-  profile: {},
-  repos: [],
-  comments: {commentsList:[], isFetching: true}
+    profile: {},
+    repos: [],
+    comments: { commentsList: [], isFetching: true },
 }
 
 const enhancers = compose(
   applyMiddleware(thunk),
-  window.devToolsExtension ? window.devToolsExtension() : f => f
+  window.devToolsExtension ? window.devToolsExtension() : f => f,
 )
 
 const store = createStore(rootReducer, defaultState, enhancers)
@@ -32,11 +32,11 @@ export const history = syncHistoryWithStore(browserHistory, store)
   Habilitar Hot Reloading
 */
 
-if(module.hot) {
-  module.hot.accept('./reducers/', () => {
-    const nextRootReducer = require('./reducers/index').default
-    store.replaceReducer(nextRootReducer)
-  })
+if (module.hot) {
+    module.hot.accept('./reducers/', () => {
+        const nextRootReducer = require('./reducers/index').default
+        store.replaceReducer(nextRootReducer)
+    })
 }
 
 export default store

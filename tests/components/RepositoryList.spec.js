@@ -45,21 +45,13 @@ describe('RepositoryList Component', function () {
 
   it('should render properly',()=>{
     expect(result.type).toEqual('div')
-    expect(result.props.className).toEqual('right-col')
+    expect(result.props.className).toEqual('wrapper')
   })
 
   it('should have the right children', ()=> {
-    const [ comments, title, repositorylist  ] = result.props.children
-    expect(result.props.children.length).toEqual(3)
+    const [ title, repositorylist  ] = result.props.children
+    expect(result.props.children.length).toEqual(2)
     expect(repositorylist.props.children.length).toEqual(2)
-    expect(comments.type).toBe(Comments)
-  })
-  
-  it('Comments should have one children to given props', ()=> {
-    const comments = result.props.children[0]
-    // console.log(comments)
-    expect(comments.props.comments.isFetching).toEqual(false)
-    expect(comments.props.comments.commentsList.length).toEqual(1)
   })
 
 })

@@ -1,5 +1,5 @@
 import expect from 'expect'
-import {  fetchGitProfileAsync, fetchGitReposAsync, getCommentAsync, addComment, editComment, removeComment } from '../../client/actions/actionCreators.js'
+import {  fetchGitProfileAsync, fetchGitReposAsync, getCommentAsync, addComment, editComment, removeComment, resetGitRepos } from '../../client/actions/actionCreators.js'
 
 describe('Action Creators', () => {
 
@@ -33,6 +33,17 @@ describe('Action Creators', () => {
       const actual = fetchGitReposAsync(repos)
       expect(typeof(actual)).toEqual('object')
       expect(actual.type).toEqual('FETCH_GIT_REPOS')
+    })
+
+  })
+  
+  describe('resetGitRepos',()=> {
+
+    it('should return a list of a empty repos', () => {
+
+      const actual = resetGitRepos()
+      expect(actual.repos.length).toEqual(0)
+      expect(actual.type).toEqual('RESET_GIT_REPOS')
     })
 
   })

@@ -11,7 +11,7 @@ import Main from './Main'
 
   Nós temos que dar um jeito de:
   1. nosso state (nossos dados)
-  2. nosso 'dispatch' de funções 
+  2. nosso 'dispatch' de funções
   ficarem disponíveis para o componente <Main />.
 
   Nós vamos propagar states e funções via props (this.props.whatever)
@@ -25,11 +25,11 @@ import Main from './Main'
 */
 
 function mapStateToProps(state) {
-  return {
-    repos: state.repos,
-    profile: state.profile,
-    comments : state.comments
-  }
+    return {
+        repos: state.repos,
+        profile: state.profile,
+        comments: state.comments,
+    }
 }
 
 /*
@@ -38,7 +38,7 @@ function mapStateToProps(state) {
 */
 
 export function mapDispatchToProps(dispatch) {
-  return bindActionCreators(actionCreators, dispatch)
+    return bindActionCreators(actionCreators, dispatch)
 }
 
 
@@ -46,9 +46,9 @@ export function mapDispatchToProps(dispatch) {
   Aqui criamos um componente <App/>  que é apenas o <Main/> com seus props
   populados com nossas ações e states
 
-  Estou injetando dados em um nível alto, mas você pode connect() qualquer componente para fazer ações e store disponíveis para você. 
+  Estou injetando dados em um nível alto, mas você pode connect() qualquer componente para fazer ações e store disponíveis para você.
 */
- 
-var App = connect(mapStateToProps, mapDispatchToProps)(Main)
+
+const App = connect(mapStateToProps, mapDispatchToProps)(Main)
 
 export default App

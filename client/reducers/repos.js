@@ -1,13 +1,15 @@
 /*
-  Função de Reducer dos repositórios 
+  Função de Reducer dos repositórios
 */
 function repos(state = [], action) {
-  switch (action.type) {
+    switch (action.type) {
     case 'FETCH_GIT_REPOS' :
-      return action.repos
+        return [...state, ...action.repos]
+    case 'RESET_GIT_REPOS' :
+        return []
     default:
-      return state
-  }
+        return state
+    }
 }
 
 export default repos

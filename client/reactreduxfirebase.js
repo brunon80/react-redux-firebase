@@ -15,7 +15,7 @@ import Home from './components/Home'
 import ProfileContainer from './components/ProfileContainer'
 
 /* Importar CSS */
-import css from  './styles/style.styl'
+import css from './styles/style.styl'
 
 /* Importar our data store */
 import store, { history } from './store'
@@ -24,15 +24,15 @@ import store, { history } from './store'
   Rendering
 */
 render(
-  <Provider store={store}>
-    { /* diz ao Router para usar nossa enhanced history */ }
-    <Router history={history}>
-      <Route path="/" component={App}>
-        <IndexRoute component={Home} />
-        <Route path="/profile/:username" component={ProfileContainer}></Route>
-      </Route>
-    </Router>
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        { /* diz ao Router para usar nossa enhanced history */}
+        <Router history={history}>
+            <Route path="/" component={App}>
+                <IndexRoute component={Home} />
+                <Route path="/profile/:username" component={ProfileContainer} />
+            </Route>
+        </Router>
+    </Provider>,
+    document.getElementById('root'),
 )
 

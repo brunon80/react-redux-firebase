@@ -1,13 +1,13 @@
 /*
-  Função de Reduce dos profile 
+  Função de Reduce dos profile
 */
 function profile(state = [], action) {
-  switch (action.type) {
-    case 'FETCH_GIT_PROFILES' :
-      return action.profile
+    switch (action.type) {
+    case 'FETCH_GIT_PROFILES':
+        return action.profile
     default:
-      return state
-  }
+        return state
+    }
 }
 
 export default profile
